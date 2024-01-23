@@ -3,6 +3,7 @@ package com.example.demo.student;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table
@@ -19,6 +20,8 @@ public class Student {
     )
     private Long id;
     private String name;
+
+    @Transient
     private int age;
     private LocalDate dateOfBirth;
     private String email;
@@ -30,21 +33,17 @@ public class Student {
     public Student(Long id,
                    String name,
                    String email,
-                   LocalDate dateOfBirth,
-                   int age) {
+                   LocalDate dateOfBirth) {
         this.id = id;
         this.name = name;
-        this.age = age;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
     }
 
     public Student(String name,
                    String email,
-                   LocalDate dateOfBirth,
-                   int age) {
+                   LocalDate dateOfBirth) {
         this.name = name;
-        this.age = age;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
     }
@@ -66,7 +65,7 @@ public class Student {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
     }
 
     public void setAge(int age) {
